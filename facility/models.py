@@ -1,11 +1,11 @@
-from datetime import datetime, timedelta
-
+from datetime import timedelta, date
 from django.db import models
 
 # Create your models here.
 
-def get_expired_date() -> datetime:
-    return datetime.today() + timedelta(weeks=4)
+def get_expired_date() -> date:
+    exp_date = date.today() + timedelta(weeks=4)
+    return exp_date
 
 
 class Facility(models.Model):

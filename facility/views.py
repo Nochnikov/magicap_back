@@ -54,7 +54,7 @@ class CategoryCreateListView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-class CategoryCreateDetailView(generics.RetrieveUpdateDestroyAPIView):
+class CategoryDetailUpdateView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     lookup_field = 'pk'

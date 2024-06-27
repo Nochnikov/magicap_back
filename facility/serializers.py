@@ -12,12 +12,15 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CategoryMainPageSerializer(CategorySerializer):
-    facilities = FacilitySerializer(many=True, read_only=True)
-
+    facilities = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
         fields = ['name', 'facilities']
+
+    def get_facilities(self, obj):
+        facilities = obj.facility_set.all()[:3]
+        return FacilitySerializer(facilities, many=True).data
 
 
 
