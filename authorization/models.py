@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
-
+from authorization.managers import UserManager
 # Create your models here.
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -18,6 +18,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     coins = models.IntegerField(default=0)
     email = models.EmailField(unique=True)
     role = models.IntegerField(choices=ROLE_CHOICE, default=EMPLOYEE)
+
+
+    objects = UserManager()
+
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
