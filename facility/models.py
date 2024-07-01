@@ -1,6 +1,6 @@
 from datetime import timedelta, date
 from django.db import models
-
+from django.contrib.auth import get_user_model
 # Create your models here.
 
 """
@@ -17,12 +17,10 @@ class Facility(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     cost = models.PositiveIntegerField()
-    expired_date = models.DateField(default=get_expired_date)
-
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.name}: {self.description}\nCost: {self.cost}\nExpired_date: {self.expired_date.strftime('%Y-%m-%d')}"
+        return f"{self.name}: {self.description}\nCost: {self.cost}"
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -30,6 +28,13 @@ class Category(models.Model):
 
     def __str__(self):
         return f"{self.name}: {self.description}"
+
+
+class Order(models.Model):
+    date = models.DateField(auto_now=True)
+    expired_date = models.DateField(default=get_expired_date)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    facilities = models.ManyToManyField(Facility)
 
 
 

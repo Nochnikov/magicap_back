@@ -8,6 +8,8 @@ urlpatterns = [
     path('main/<int:category_id>/', views.FacilityListByCategoryView.as_view(), name='facility-list'),
     path('main/<int:pk>/', views.FacilityDetailView.as_view(), name='facility-detail'),
 
+    path('main/facalities/', views.CategoriesWithCountView.as_view(), name='facility-count'),
+    path('main/facility/<int:facility_id>', views.OrderFacilitiesView.as_view(), name='facility-order'),
 
     #admin only
     path('main/create/', views.FacilityCreateView.as_view(), name='facility-create'),
