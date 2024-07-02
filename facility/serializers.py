@@ -37,9 +37,11 @@ class CategoryMainPageSerializer(CategorySerializer):
         return FacilitySerializer(facilities, many=True).data
 
 class OrderSerializer(serializers.ModelSerializer):
+
+    facilities = FacilitySerializer(read_only=True, many=True)
+
     class Meta:
         model = Order
-        fields = '__all__'
-
+        fields = ['date', 'facilities']
 
 

@@ -3,11 +3,6 @@ from django.db import models
 from django.contrib.auth import get_user_model
 # Create your models here.
 
-"""
-have to add new model for facilities which is already taken by employee and expired date is related to that table
-
-"""
-
 def get_expired_date() -> date:
     exp_date = date.today() + timedelta(weeks=4)
     return exp_date
@@ -16,6 +11,7 @@ def get_expired_date() -> date:
 class Facility(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    expired_date = models.DateField(default=get_expired_date)
     cost = models.PositiveIntegerField()
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
 
@@ -32,9 +28,7 @@ class Category(models.Model):
 
 class Order(models.Model):
     date = models.DateField(auto_now=True)
-    expired_date = models.DateField(default=get_expired_date)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='orders')
     facilities = models.ManyToManyField(Facility)
-
 
 

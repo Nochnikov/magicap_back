@@ -16,8 +16,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     coins = models.IntegerField(default=0)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(null=True)
     role = models.IntegerField(choices=ROLE_CHOICE, default=EMPLOYEE)
+    is_staff = models.BooleanField(default=False)
 
 
     objects = UserManager()

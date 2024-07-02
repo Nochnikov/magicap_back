@@ -6,9 +6,11 @@ from authorization.views import ProfileRetrieveUpdateView, ProfileListView, Prof
 urlpatterns = [
     path('login/', rest_framework.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('login/refresh/', rest_framework.TokenRefreshView.as_view(), name='token_refresh'),
+    path('me/', ProfileRetrieveUpdateView.as_view(), name='profile')
 
     #admin omly
-    path('users/list/', ProfileListView.as_view(), name='users_list' ),
-    path('users/<int:pk>/', ProfileRetrieveUpdateDeleteView.as_view(), name='user_profile' )
+    #удалить
+    # path('users/list/', ProfileListView.as_view(), name='users_list' ),
+    # path('users/<int:pk>/', ProfileRetrieveUpdateDeleteView.as_view(), name='user_profile' )
 
 ]

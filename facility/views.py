@@ -19,6 +19,10 @@ class CategoriesWithFacilitiesView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryMainPageSerializer
 
+    def get_queryset(self):
+        qs = Category.objects.all()[:3]
+        return qs
+
 
 class FacilityListByCategoryView(generics.ListAPIView):
     queryset = Facility.objects.all()
@@ -91,3 +95,5 @@ class OrderFacilitiesView(generics.CreateAPIView):
         order = Order.objects.create(user=user)
         order.facilities.add(facility_id)
         order.save()
+
+        return Response({"msg": "Facility added to database"})
