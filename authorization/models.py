@@ -19,13 +19,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(null=True)
     role = models.IntegerField(choices=ROLE_CHOICE, default=EMPLOYEE)
     is_staff = models.BooleanField(default=False)
-
+    is_active = models.BooleanField(default=True)
 
     objects = UserManager()
 
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            self.set_password(self.password)
+        super(User, self).save(*args, **kwargs)
 
 
 
