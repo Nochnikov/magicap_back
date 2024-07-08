@@ -1,22 +1,22 @@
 from django.contrib.auth.models import BaseUserManager
-
+from django.contrib.auth.hashers import make_password
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, password, role=3):
-        user = self.model(username=username)
-        user.set_password(password)
-        user.role = role
-        user.save(using=self._db)
+    def create_user(self, username, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", False)
+        extra_fields.setdefault("is_superuser", False)
 
+        if not username:
+            raise ValueError("The given username must be set")
+
+        user = self.model(username=username, **extra_fields)
+        user.password = make_password(password)
+        user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password):
-        user = self.create_user(username, password, role=1)
-        user.is_superuser = True
-        user.is_staff = True
-        user.save(using=self._db)
+    def create_superuser(self, username, password=None, **extra_fields):
 
-        return user
+        return self.create_user(username, password, is_staff=True, is_superuser=True, **extra_fields)
 
 
 
