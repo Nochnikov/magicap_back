@@ -1,9 +1,8 @@
-from django.contrib.auth import get_user_model
-from rest_framework import generics, permissions
+from rest_framework import generics
 from rest_framework.response import Response
 
 from facility.models import Benefit, Category, Order
-from facility.serializers import FacilitySerializer, CategorySerializer, CategoryMainPageSerializer, \
+from facility.serializers import FacilitySerializer, CategoryMainPageSerializer, \
     CategoryWithCountSerializer, OrderSerializer
 
 
@@ -40,49 +39,17 @@ class BenefitDetailView(generics.RetrieveAPIView):
     serializer_class = FacilitySerializer
 
 
-"""
-
-Below admin only views
-
-"""
-
-
-class FacilityCreateView(generics.CreateAPIView):
-    # permission_classes = (permissions.DjangoModelPermissions,)
-
-    queryset = Benefit.objects.all()
-    serializer_class = FacilitySerializer
-
-
-class FacilityUpdateView(generics.UpdateAPIView):
-    # permission_classes = (permissions.DjangoModelPermissions,)
-
-    queryset = Benefit.objects.all()
-    serializer_class = FacilitySerializer
-
-
-class CategoryCreateListView(generics.ListCreateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-
-class CategoryDetailUpdateView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    lookup_field = 'pk'
-
-
 class OrderFacilitiesView(generics.CreateAPIView):
     serializer_class = OrderSerializer
 
     def post(self, request, *args, **kwargs):
-        facility_id = self.kwargs.get('facility_id')
+        benefit_id = self.kwargs.get('benefit_id')
         user = self.request.user
 
         try:
-            cost = Benefit.objects.all().get(pk=facility_id).cost
+            cost = Benefit.objects.all().get(pk=benefit_id).cost
         except Exception:
-            raise {"message": f"Facility with ID {facility_id} does not exist"}
+            raise {"message": f"Facility with ID {benefit_id} does not exist"}
 
 
         if user.coins < cost:
@@ -93,7 +60,7 @@ class OrderFacilitiesView(generics.CreateAPIView):
 
 
         order = Order.objects.create(user=user)
-        order.facilities.add(facility_id)
+        order.facilities.add(benefit_id)
         order.save()
 
         return Response({"msg": "Facility added to database"})

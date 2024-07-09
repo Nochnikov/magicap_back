@@ -16,7 +16,7 @@ class CategoryWithCountSerializer(serializers.ModelSerializer):
         fields = ['name', 'count']
 
     def get_count(self, obj):
-        count = obj.facility_set.count()
+        count = obj.benefit_set.count()
         return count
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -33,7 +33,7 @@ class CategoryMainPageSerializer(CategorySerializer):
         fields = ['name', 'facilities']
 
     def get_facilities(self, obj):
-        facilities = obj.facility_set.all()[:3]
+        facilities = obj.benefit_set.all()[:3]
         return FacilitySerializer(facilities, many=True).data
 
 class OrderSerializer(serializers.ModelSerializer):

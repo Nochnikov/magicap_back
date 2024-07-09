@@ -1,6 +1,6 @@
-from rest_framework import generics, permissions
+from rest_framework import generics
 from authorization.models import User
-from authorization.serializers import MyProfileSerializer, UserProfileSerializer, UserSerializer
+from authorization.serializers import MyProfileSerializer
 
 
 # Create your views here.
