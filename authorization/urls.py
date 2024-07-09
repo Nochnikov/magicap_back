@@ -1,16 +1,11 @@
 from django.urls import path
 from rest_framework_simplejwt import views as rest_framework
-from authorization.views import ProfileRetrieveUpdateView, ProfileListView, ProfileRetrieveUpdateDeleteView
+from authorization.views import ProfileRetrieveUpdateView
 
 
 urlpatterns = [
     path('login/', rest_framework.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('login/refresh/', rest_framework.TokenRefreshView.as_view(), name='token_refresh'),
     path('me/', ProfileRetrieveUpdateView.as_view(), name='profile')
-
-    #admin omly
-    #удалить
-    # path('users/list/', ProfileListView.as_view(), name='users_list' ),
-    # path('users/<int:pk>/', ProfileRetrieveUpdateDeleteView.as_view(), name='user_profile' )
 
 ]

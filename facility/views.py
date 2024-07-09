@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 
-from facility.models import Facility, Category, Order
+from facility.models import Benefit, Category, Order
 from facility.serializers import FacilitySerializer, CategorySerializer, CategoryMainPageSerializer, \
     CategoryWithCountSerializer, OrderSerializer
 
@@ -24,19 +24,19 @@ class CategoriesWithFacilitiesView(generics.ListAPIView):
         return qs
 
 
-class FacilityListByCategoryView(generics.ListAPIView):
-    queryset = Facility.objects.all()
+class BenefitsListByCategoryView(generics.ListAPIView):
+    queryset = Benefit.objects.all()
     serializer_class = FacilitySerializer
 
     def get_queryset(self):
         category_id = self.kwargs.get('category_id')
 
-        qs = Facility.objects.all().filter(category=category_id)
+        qs = Benefit.objects.all().filter(category=category_id)
         return qs
 
 
-class FacilityDetailView(generics.RetrieveAPIView):
-    queryset = Facility.objects.all()
+class BenefitDetailView(generics.RetrieveAPIView):
+    queryset = Benefit.objects.all()
     serializer_class = FacilitySerializer
 
 
@@ -50,14 +50,14 @@ Below admin only views
 class FacilityCreateView(generics.CreateAPIView):
     # permission_classes = (permissions.DjangoModelPermissions,)
 
-    queryset = Facility.objects.all()
+    queryset = Benefit.objects.all()
     serializer_class = FacilitySerializer
 
 
 class FacilityUpdateView(generics.UpdateAPIView):
     # permission_classes = (permissions.DjangoModelPermissions,)
 
-    queryset = Facility.objects.all()
+    queryset = Benefit.objects.all()
     serializer_class = FacilitySerializer
 
 
@@ -80,7 +80,7 @@ class OrderFacilitiesView(generics.CreateAPIView):
         user = self.request.user
 
         try:
-            cost = Facility.objects.all().get(pk=facility_id).cost
+            cost = Benefit.objects.all().get(pk=facility_id).cost
         except Exception:
             raise {"message": f"Facility with ID {facility_id} does not exist"}
 

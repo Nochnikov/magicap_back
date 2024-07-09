@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from facility.models import Facility, Category, Order
+from facility.models import Benefit, Category, Order
 
 
 class FacilitySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Facility
+        model = Benefit
         fields = '__all__'
 
 
