@@ -2,7 +2,7 @@ from rest_framework import serializers
 from facility.models import Benefit, Category, Order
 
 
-class FacilitySerializer(serializers.ModelSerializer):
+class BenefitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Benefit
         fields = '__all__'
@@ -34,11 +34,11 @@ class CategoryMainPageSerializer(CategorySerializer):
 
     def get_facilities(self, obj):
         facilities = obj.benefit_set.all()[:3]
-        return FacilitySerializer(facilities, many=True).data
+        return BenefitSerializer(facilities, many=True).data
 
 class OrderSerializer(serializers.ModelSerializer):
 
-    facilities = FacilitySerializer(read_only=True, many=True)
+    facilities = BenefitSerializer(read_only=True, many=True)
 
     class Meta:
         model = Order

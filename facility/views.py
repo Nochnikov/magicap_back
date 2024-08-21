@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 
 from facility.models import Benefit, Category, Order
-from facility.serializers import FacilitySerializer, CategoryMainPageSerializer, \
+from facility.serializers import BenefitSerializer, CategoryMainPageSerializer, \
     CategoryWithCountSerializer, OrderSerializer
 
 
@@ -14,7 +14,7 @@ class CategoriesWithCountView(generics.ListAPIView):
     serializer_class = CategoryWithCountSerializer
 
 
-class CategoriesWithFacilitiesView(generics.ListAPIView):
+class CategoriesWithBenefitsView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryMainPageSerializer
 
@@ -25,7 +25,7 @@ class CategoriesWithFacilitiesView(generics.ListAPIView):
 
 class BenefitsListByCategoryView(generics.ListAPIView):
     queryset = Benefit.objects.all()
-    serializer_class = FacilitySerializer
+    serializer_class = BenefitSerializer
 
     def get_queryset(self):
         category_id = self.kwargs.get('category_id')
@@ -36,10 +36,10 @@ class BenefitsListByCategoryView(generics.ListAPIView):
 
 class BenefitDetailView(generics.RetrieveAPIView):
     queryset = Benefit.objects.all()
-    serializer_class = FacilitySerializer
+    serializer_class = BenefitSerializer
 
 
-class OrderFacilitiesView(generics.CreateAPIView):
+class OrderBenefitsView(generics.CreateAPIView):
     serializer_class = OrderSerializer
 
     def post(self, request, *args, **kwargs):
