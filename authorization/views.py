@@ -8,7 +8,6 @@ from authorization.serializers import MyProfileSerializer
 
 class ProfileRetrieveUpdateView(generics.RetrieveUpdateDestroyAPIView):
 
-    # permission_classes = (permissions.IsAuthenticated,)
     queryset = User.objects.all()
     serializer_class = MyProfileSerializer
 

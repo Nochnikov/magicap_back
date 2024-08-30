@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,7 +46,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_extensions',
     'authorization',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'rest_framework_swagger'
 ]
 
 MIDDLEWARE = [
@@ -61,7 +65,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':[os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,15 +83,24 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+load_dotenv(dotenv_path=r"envfiles/.env")
+
+# USER = getenv("USER")
+# PASSWORD = getenv("PASSWORD")
+# HOST = getenv("HOST")
+# PORT = int(getenv("PORT"))
+# NAME = getenv("NAME")
+
+# print(USER, PASSWORD, HOST, PORT, NAME, sep="\n")
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'magictap',
-        'USER': 'postgres',
-        "PASSWORD": "RockIsdead123",
-        "HOST": "127.0.0.1",
-        "PORT": 5432,
+        'NAME': os.environ.get('NAME'),
+        'USER': os.environ.get('USER'),
+        "PASSWORD": os.environ.get('PASSWORD'),
+        "HOST": os.environ.get('HOST'),
+        "PORT": int(os.environ.get('PORT')),
     }
 }
 
