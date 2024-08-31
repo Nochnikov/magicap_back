@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'authorization',
     'rest_framework_simplejwt',
-    'rest_framework_swagger'
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -98,7 +98,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('NAME'),
         'USER': os.environ.get('USER'),
-        "PASSWORD": os.environ.get('PASSWORD'),
+        "PASSWORD": os.environ.get('PASSWORD', 'postgres-db'),
         "HOST": os.environ.get('HOST'),
         "PORT": int(os.environ.get('PORT')),
     }
