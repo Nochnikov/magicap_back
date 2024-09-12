@@ -40,8 +40,6 @@ class BenefitDetailView(generics.RetrieveAPIView):
 
 
 class OrderBenefitsView(generics.CreateAPIView):
-    # serializer_class = OrderSerializer
-
     def post(self, request, *args, **kwargs):
         benefit_id = self.kwargs.get('benefit_id')
         user = self.request.user
