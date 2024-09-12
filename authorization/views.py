@@ -1,4 +1,6 @@
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+
 from authorization.models import User
 from authorization.serializers import MyProfileSerializer
 
@@ -14,6 +16,6 @@ class ProfileRetrieveUpdateView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         user = User.objects.prefetch_related(
-            'orders__facilities'
+            'orders__benefits'
         ).get(pk=self.request.user.pk)
         return user

@@ -23,6 +23,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
     photo = models.ImageField(upload_to='categories/', null=True, blank=True)
+
     def __str__(self):
         return f"{self.name}: {self.description}"
 
@@ -33,6 +34,6 @@ class Category(models.Model):
 class Order(models.Model):
     date = models.DateField(auto_now=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='orders')
-    facilities = models.ManyToManyField(Benefit)
+    benefits = models.ManyToManyField(Benefit)
 
 

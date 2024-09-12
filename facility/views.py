@@ -40,7 +40,7 @@ class BenefitDetailView(generics.RetrieveAPIView):
 
 
 class OrderBenefitsView(generics.CreateAPIView):
-    serializer_class = OrderSerializer
+    # serializer_class = OrderSerializer
 
     def post(self, request, *args, **kwargs):
         benefit_id = self.kwargs.get('benefit_id')
@@ -49,18 +49,18 @@ class OrderBenefitsView(generics.CreateAPIView):
         try:
             cost = Benefit.objects.all().get(pk=benefit_id).cost
         except Exception:
-            raise {"message": f"Facility with ID {benefit_id} does not exist"}
+            raise {"message": f"Benefit with ID {benefit_id} does not exist"}
 
 
         if user.coins < cost:
-            return Response({"msg": "Not enough money"})
+            return Response({"msg": "Not enough coins"})
 
         user.coins -= cost
         user.save()
 
 
         order = Order.objects.create(user=user)
-        order.facilities.add(benefit_id)
+        order.benefits.add(benefit_id)
         order.save()
 
-        return Response({"msg": "Facility added to database"})
+        return Response({"msg": "Benefit added to a database"})

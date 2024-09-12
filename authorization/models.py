@@ -32,10 +32,6 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.set_password(self.password)
         super(User, self).save(*args, **kwargs)
 
-    """rewrite that part
-    main problem is that password is hashed twice"""
-
-
 
 
 

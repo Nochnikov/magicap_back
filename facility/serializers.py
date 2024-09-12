@@ -26,22 +26,22 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class CategoryMainPageSerializer(CategorySerializer):
-    facilities = serializers.SerializerMethodField()
+    benefits = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        fields = ['name', 'facilities']
+        fields = ['name', 'benefits']
 
-    def get_facilities(self, obj):
-        facilities = obj.benefit_set.all()[:3]
-        return BenefitSerializer(facilities, many=True).data
+    def get_benefits(self, obj):
+        benefits = obj.benefit_set.all()[:3]
+        return BenefitSerializer(benefits, many=True).data
 
 class OrderSerializer(serializers.ModelSerializer):
 
-    facilities = BenefitSerializer(read_only=True, many=True)
+    benefits = BenefitSerializer(read_only=False, many=True)
 
     class Meta:
         model = Order
-        fields = ['date', 'facilities']
+        fields = ['date', 'benefits']
 
 

@@ -18,13 +18,22 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Magictap API",
+        default_version='v1',
+        description="API for MagicTap",
+    ),
+    public=True
+)
+
 
 
 urlpatterns = [
-    path("api_schema", get_schema_view(title="Magictap API",
-                                       description="API for Magictap"), name="api_schema"),
-    path("docs/", TemplateView.as_view(template_name=r"docs/docs.html",
-                                             extra_context={"schema_url": "api_schema"}), name="swagger-ui"),
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='docs-swagger'),
     path('admin/', admin.site.urls),
     path('auth/', include('authorization.urls')),
     path('benefits/', include('facility.urls')),

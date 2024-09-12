@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+
+import rest_framework.authentication
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -48,6 +50,8 @@ INSTALLED_APPS = [
     'authorization',
     'rest_framework_simplejwt',
     'rest_framework_swagger',
+    'drf_yasg',
+
 ]
 
 MIDDLEWARE = [
@@ -96,10 +100,10 @@ load_dotenv(dotenv_path=r"envfiles/.env")
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('NAME'),
-        'USER': os.environ.get('USER'),
+        'NAME': os.environ.get('NAME', 'magictap'),
+        'USER': os.environ.get('USER', 'magictap'),
         "PASSWORD": os.environ.get('PASSWORD', 'postgres-db'),
-        "HOST": os.environ.get('HOST'),
+        "HOST": os.environ.get('HOST', 'magictap'),
         "PORT": int(os.environ.get('PORT')),
     }
 }
@@ -122,15 +126,16 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny', ],
 }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -156,7 +161,7 @@ from datetime import timedelta
 ...
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
@@ -194,6 +199,19 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'JWT Authorization header using the Bearer scheme. Example: "Authorization: Bearer {token}"',
+        }
+    },
+    'USE_SESSION_AUTH': False,
+}
+
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = 'media/'
