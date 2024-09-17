@@ -8,7 +8,6 @@ services:
       POSTGRES_USER: magictap
       POSTGRES_PASSWORD: magictap
       POSTGRES_DB: magictap
-
     volumes:
       - magictap_postgres_data:/var/lib/postgresql/data
     ports:
@@ -16,7 +15,7 @@ services:
 
   web:
     build: .
-#    command: python manage.py runserver  0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
@@ -26,5 +25,6 @@ services:
     depends_on:
       - magictap-postgres-db
 
+
 volumes:
-  magictap_postgres_db:
+    magictap_postgres_data:
