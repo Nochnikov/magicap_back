@@ -10,7 +10,9 @@ def get_expired_date() -> date:
 
 class Benefit(models.Model):
     name = models.CharField(max_length=100)
+    sub_name = models.CharField(max_length=50, null=True, blank=True)
     description = models.TextField()
+    company = models.CharField(max_length=50, null=True, blank=True)
     expired_date = models.DateField(default=get_expired_date)
     cost = models.PositiveIntegerField()
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
