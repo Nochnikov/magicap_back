@@ -9,5 +9,6 @@ class MyProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'coins', 'role', 'orders']
-        read_only_fields = ['coins', 'role', 'orders']
+        fields = ['first_name', 'last_name', 'date_of_birth', 'country', 'avatar', 'email', 'gender', 'coins', 'role',
+                  'orders', 'phone_number']
+        read_only_fields = ['coins', 'role', 'orders',]

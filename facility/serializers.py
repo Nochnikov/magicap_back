@@ -43,5 +43,3 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['date', 'benefits']
-
-

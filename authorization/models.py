@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from authorization.managers import UserManager
@@ -6,18 +8,32 @@ from authorization.managers import UserManager
 class User(AbstractBaseUser, PermissionsMixin):
 
     ADMIN, HR, EMPLOYEE = 1, 2, 3
+    MALE, FEMALE, OTHER = 1, 2, 3
 
     ROLE_CHOICE = (
         (ADMIN, 'Admin'),
         (HR, 'HR'),
         (EMPLOYEE, 'Employee'),
     )
+
+    GENDER_CHOICE = (
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+        (OTHER, 'Other'),
+    )
+
+
     username = models.CharField(unique=True, max_length=50)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    date_of_birth = models.DateField(default=datetime.now())
+    country = models.CharField(max_length=50)
+    gender = models.IntegerField(choices=GENDER_CHOICE, default=MALE)
     coins = models.IntegerField(default=0)
     email = models.EmailField(null=True)
     role = models.IntegerField(choices=ROLE_CHOICE, default=EMPLOYEE)
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 

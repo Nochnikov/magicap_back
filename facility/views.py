@@ -3,7 +3,7 @@ from rest_framework.response import Response
 
 from facility.models import Benefit, Category, Order
 from facility.serializers import BenefitSerializer, CategoryMainPageSerializer, \
-    CategoryWithCountSerializer
+    CategoryWithCountSerializer, CategorySerializer
 
 
 # Create your views here.
@@ -25,6 +25,9 @@ class CategoriesWithBenefitsView(generics.ListAPIView):
         qs = Category.objects.all()[:3]
         return qs
 
+class CategoriesView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 class BenefitsListByCategoryView(generics.ListAPIView):
     queryset = Benefit.objects.all()
