@@ -38,6 +38,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authorization.urls')),
     path('benefits/', include('facility.urls')),
+    path('hr/', include('hr.urls'))
 ]
 
 if settings.DEBUG is True:

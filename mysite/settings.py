@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'drf_yasg',
     'corsheaders',
+    'hr'
 
 ]
 
@@ -75,6 +76,7 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+SECURE_SSL_REDIRECT = False
 
 
 TEMPLATES = [
@@ -98,24 +100,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-load_dotenv(dotenv_path=r"envfiles/.env")
-
-# USER = getenv("USER")
-# PASSWORD = getenv("PASSWORD")
-# HOST = getenv("HOST")
-# PORT = int(getenv("PORT"))
-# NAME = getenv("NAME")
-
-# print(USER, PASSWORD, HOST, PORT, NAME, sep="\n")
+load_dotenv()
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('NAME', 'magictap'),
         'USER': os.environ.get('USER', 'magictap'),
-        "PASSWORD": os.environ.get('PASSWORD', 'postgres-db'),
-        "HOST": os.environ.get('HOST', 'magictap'),
-        "PORT": int(os.environ.get('PORT')),
+        "PASSWORD": os.environ.get('PASSWORD', 'magictap'),
+        "HOST": os.environ.get('HOST', 'magictap-postgres-db'),
+        "PORT": 5432,
     }
 }
 
