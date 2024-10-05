@@ -1,11 +1,11 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import generics, mixins
-
-from authorization.models import User
-from facility.models import Category, Benefit
-from facility.serializers import CategorySerializer, BenefitSerializer
+from facility.models import Category, Benefit, Order
+from facility.serializers import CategorySerializer, BenefitSerializer, OrderSerializer
 from hr.serializers import *
 from hr.permissions import *
+from authorization.models import User
+
 
 # Create your views here.
 
@@ -46,6 +46,7 @@ class CreateCategoryView(generics.CreateAPIView):
 class ListCategoryView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = (IsHRorAdmin,)
 
 class EditDeleteCategoryView(generics.GenericAPIView, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
                              mixins.RetrieveModelMixin):
@@ -71,6 +72,8 @@ class ListBenefitsView(generics.ListAPIView):
     queryset = Benefit.objects.all()
     serializer_class = BenefitSerializer
 
+    permission_classes = (IsHRorAdmin,)
+
 class EditDeleteBenefitView(generics.GenericAPIView, mixins.UpdateModelMixin, mixins.DestroyModelMixin, mixins.RetrieveModelMixin):
     queryset = Benefit.objects.all()
     serializer_class = BenefitSerializer
@@ -86,4 +89,9 @@ class EditDeleteBenefitView(generics.GenericAPIView, mixins.UpdateModelMixin, mi
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
 
+
+class AllOrdersView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserOrdersSerializer
+    permission_classes = (IsHRorAdmin,)
 
