@@ -10,6 +10,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     ADMIN, HR, EMPLOYEE = 1, 2, 3
     MALE, FEMALE, OTHER = 1, 2, 3
 
+
     ROLE_CHOICE = (
         (ADMIN, 'Admin'),
         (HR, 'HR'),

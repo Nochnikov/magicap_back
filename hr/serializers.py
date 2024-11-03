@@ -7,9 +7,9 @@ from facility.serializers import OrderSerializer
 class CreateUpdateDeleteUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'gender',
+        fields = ["pk", 'first_name', 'last_name', 'username', 'email', 'password', 'gender',
                   'avatar', 'country', 'phone_number', 'coins', 'company']
-
+        read_only_fields = ("pk")
 
 
 class UserOrdersSerializer(serializers.ModelSerializer):
